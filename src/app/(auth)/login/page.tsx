@@ -2,31 +2,33 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
+import { FormEvent, useState } from "react";
+import { AxiosError } from "axios";
+import { signIn } from "next-auth/react";
 
-const Login: React.FC = () => {
-//   const [identificacion, setIdentificacion] = useState("");
-//   const [password, setPassword] = useState("");
+const Login = () => {
+  const [error, setError] = useState("");
   const [show, setShow] = useState(false);
-
-  const [credentials, setCredentials] = useState({
-    identificacion: "",
-    password: "",
-  });
   const router = useRouter();
-  const handleSubmit = async (e:any) => {
-    e.preventDefault();
-    const res = await axios.post("/api/auth/login", credentials);
-    console.log(res);
-    console.log(credentials.identificacion, credentials.password);
 
-    if (res.status === 200) {
-      router.push("/dashboard");
-    }else{
-		toast.error("Ocurrio un error al iniciar sesion");
-	}
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await signIn("credentials", {
+      identificacion: formData.get("identificacion"),
+      password: formData.get("password"),
+      redirect: false,
+    });
+
+    if (res?.error) setError(res.error as string);
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    if (res?.ok) return router.push("/dashboard");
   };
 
   return (
@@ -43,7 +45,7 @@ const Login: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center self-center  z-10">
-          <form className="w-full max-w-md" onSubmit={handleSubmit} method="POST">
+          <form className="w-full max-w-md" onSubmit={handleSubmit}>
             <div className="p-12 bg-white mx-auto rounded-3xl w-96 ">
               <div className="mb-7 flex items-center justify-center">
                 <h3 className="font-semibold text-2xl text-gray-800">
@@ -53,18 +55,10 @@ const Login: React.FC = () => {
               <div className="space-y-6">
                 <div className="">
                   <input
-                    className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-900"
+                    className=" w-full text-sm  px-4 py-3 text-gray-600 bg-gray-200 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-900"
                     type="text"
-                    id="cedula"
-                    name="cedula"
-					required
-                    // value={identificacion}
-                    onChange={(e) =>
-						setCredentials({
-						  ...credentials,
-						  identificacion: e.target.value,
-						})
-					  }
+                    id="identificacion"
+                    name="identificacion"
                     placeholder="N° de Identificacion"
                   />
                 </div>
@@ -74,14 +68,7 @@ const Login: React.FC = () => {
                     placeholder="Contraseña"
                     id="password"
                     name="password"
-					required
-                    // value={password}
-                    onChange={(e) =>
-						setCredentials({
-						  ...credentials,
-						  password: e.target.value,
-						})
-					  }
+                    required
                     type={show ? "text" : "password"}
                     className="text-sm text-gray-600 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-transparent border border-gray-200 focus:outline-none focus:border-blue-900"
                   />

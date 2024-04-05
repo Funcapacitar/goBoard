@@ -46,7 +46,7 @@ const FormSchema = z.object({
   //   required_error: "A date of birth is required.",
   // }),
   nombre: z.string({
-    required_error: "EDebes proporcionar un nombre.",
+    required_error: "Debes seleccionar un nombre.",
   }),
   departamento: z.string({
     required_error: "Debes seleccionar un departamento.",
@@ -88,16 +88,8 @@ const FormInvitacion = () => {
               onSubmit={form.handleSubmit(handlerSubmit)}
               className="space-y-8"
             >
-              <FormField
-                control={form.control}
-                name="nombre"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Nombre</FormLabel>
-                    <Input placeholder="Nombre" {...field} />
-                  </FormItem>
-                )}
-              />
+              
+
               {/* <FormField
                 control={form.control}
                 name="dob"
@@ -205,6 +197,35 @@ const FormInvitacion = () => {
                   />
                 </div>
               </div>
+                  <FormField
+                control={form.control}
+                name="nombre"
+                render={({ field }) => (
+                  <FormItem>
+                        <FormLabel>Nombre</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecciona tu corporacion" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="corpocesar">Corpocesar</SelectItem>
+                            <SelectItem value="corpoguajira">
+                              Corpoguajira
+                            </SelectItem>
+                            <SelectItem value="cormed">Cormed</SelectItem>
+                            <SelectItem value="cam">CAM</SelectItem>
+                          </SelectContent>
+                        </Select>
+
+                        <FormMessage />
+                      </FormItem>
+                )}
+              />
               <CardFooter className="border-t  py-4">
                 <Button type="submit" className="w-full">Guardar</Button>
               </CardFooter>

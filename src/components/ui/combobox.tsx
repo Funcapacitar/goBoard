@@ -1,57 +1,33 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 interface ComboboxProps {
-    options: { label: string; value: string }[];
-    value?: string;
-    onChange: (value: string) => void;
-  }
+  options: { label: string; value: string }[];
+  value?: string;
+  onChange: (value: string) => void;
+}
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
+  const [open, setOpen] = React.useState(false);
 
-export const Combobox = ({ options, value, onChange }: ComboboxProps) =>{
-  const [open, setOpen] = React.useState(false)
-//   const [value, setValue] = React.useState("")
-
-return (
+  return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
@@ -62,21 +38,21 @@ return (
         >
           {value
             ? options.find((option) => option.value === value)?.label
-            : "Selectciona una opcion..."}
+            : "Selecciona una opcion..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search option..." />
-          <CommandEmpty>No hay datos aún.</CommandEmpty>
+          <CommandEmpty>No option found.</CommandEmpty>
           <CommandGroup>
             {options.map((option) => (
               <CommandItem
                 key={option.value}
                 onSelect={() => {
                   onChange(
-                    option.value === value ? "No asignado" : option.value
+                    option.value === value ? "Sin categoria" : option.value
                   );
                   setOpen(false);
                 }}
@@ -95,4 +71,4 @@ return (
       </PopoverContent>
     </Popover>
   );
-}
+};

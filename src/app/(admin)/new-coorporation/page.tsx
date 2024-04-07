@@ -1,13 +1,16 @@
 "use client";
 
 import FormAdd from "./_components/FormAdd";
-import FormJuntaDirectiva from "./_components/FormJuntaDirectiva";
+import FormJuntaDirectiva, {
+  JuntaDirectiva,
+} from "./_components/FormJuntaDirectiva";
 import FormInvitacion from "./_components/formdate";
 import Sidebar from "./_components/sidebar";
 import { useState } from "react";
 
 export default function Dashboard() {
   const [active, setactive] = useState(1);
+  let members: JuntaDirectiva[] = [];
 
   return (
     <div className="flex min-h-screen w-full flex-col">

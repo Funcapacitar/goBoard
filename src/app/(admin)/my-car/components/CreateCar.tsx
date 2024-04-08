@@ -61,7 +61,7 @@ export const CreateCar = () => {
       title: "",
       description: "",
       videoUrl: "",
-      videoSection: "Untitled Section",
+      videoSection: "Cargo del delegado",
       links: [
         {
           title: "",

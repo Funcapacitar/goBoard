@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const page = () => {
-  return (
-    <div>Crear Invitacion</div>
-  )
-}
+  return <div>hola</div>;
+};
 
-export default page
+export default page;

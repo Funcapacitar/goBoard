@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CarOptions from "./CarOptions";
 import CarInfo from "./CarInfo";
 import CarBoardDirective from "./CarBoardDirective";
+import PreviewCarMembers from "./PreviewCarMembers";
 
 interface Department {
   id: number;
@@ -125,6 +126,7 @@ export const CreateCar = () => {
             handleSubmit={handleSubmit}
           />
         )}
+        {active === 2 && <PreviewCarMembers />}
       </div>
       <div className="w-[20%] mt-[100px] h-screen fixed top-16 right-0 ">
         <CarOptions active={active} setActive={setActive} />

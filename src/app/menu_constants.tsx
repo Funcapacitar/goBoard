@@ -33,7 +33,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         icon: <BsKanban size={20} />,
         submenu: true,
         subMenuItems: [
-          { title: "Crear Invitacion", path: "/create-invitacion" },
+          { title: "Crear Invitacion", path: "/create-invitation" },
           {
             title: "Invitaciones Pendientes",
             path: "/createInvitacion/pendding",
